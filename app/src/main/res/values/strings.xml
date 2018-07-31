@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">BeaGroup</string>
+    <string name="friend">friend</string>
+    <string name="product">product</string>
+    <string name="lock">lock</string>
+    <string name="account">account</string>
+    <string name="title_activity_login">login</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+
+
+</resources>
