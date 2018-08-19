@@ -6,6 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="textInputStyle">@style/Widget.Design.TextInputLayout</item>
     </style>
+
+    <style name="SwitchStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#FF0080</item>
+        <item name="colorSwitchThumbNormal">#00BB00</item>
+        <item name="android:colorForeground">#00BB00</item>
+    </style>
+
+
+
 
 </resources>
