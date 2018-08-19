@@ -30,8 +30,8 @@ public class login extends AppCompatActivity {
         String password = edUserpwd.getText().toString();
         String type = "login";
         BackgroundWork backgroundWork = new BackgroundWork(this);
-        backgroundWork.execute(type, username,password);
-       if(backgroundWork.login_code.equals("1")){
+        backgroundWork.execute(type, username,password); //傳參數(型態：登入、登入內容)
+       if(backgroundWork.login_code.equals("1")){ //若登入成功，跳轉至主畫面
             Intent intent = new Intent();
             intent.setClass(login.this, MainActivity.class);
             startActivity(intent);
@@ -41,7 +41,7 @@ public class login extends AppCompatActivity {
 
     public void openSignup(View view){
         startActivity(new Intent(this, signup.class));
-    }
+    } //按下Signup進入註冊畫面
 
 
 

@@ -6,14 +6,15 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //boolean logon = false;
+        boolean logon = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*if(!logon){
+        if(!logon){
                 Intent intent = new Intent(this, login.class);
                 startActivity(intent);
-        }*/
+        }
     }
 }

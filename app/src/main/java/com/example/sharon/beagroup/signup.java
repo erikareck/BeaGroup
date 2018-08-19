@@ -20,16 +20,16 @@ public class signup extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); //鍵盤不自動彈出
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
         name = (EditText) findViewById(R.id.et_name);
         password = (EditText) findViewById(R.id.et_password);
         password_con = (EditText) findViewById(R.id.et_password_con);
         email = (EditText) findViewById(R.id.et_email);
         id = (EditText) findViewById(R.id.et_id);
         sex = (Switch) findViewById(R.id.et_sex);
-        passwordlayout = (TextInputLayout)findViewById(R.id.et_password_layout);
+        passwordlayout = (TextInputLayout)findViewById(R.id.et_password_layout); //textinputlayout使edittext能顯示錯誤訊息等
         passwordconlayout = (TextInputLayout)findViewById(R.id.et_password_con_layout);
 
         password_con.addTextChangedListener(new TextWatcher() {
@@ -45,7 +45,7 @@ public class signup extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals(password.getText().toString()))
+                if (s.toString().equals(password.getText().toString())) //測試兩次輸入之密碼是否一致
                     passwordconlayout.setError(null);
                 else
                     passwordconlayout.setError("輸入密碼不一致");
@@ -68,8 +68,8 @@ public class signup extends AppCompatActivity {
 
         String type = "signup";
         BackgroundWork backgroundWork = new BackgroundWork(this);
-        backgroundWork.execute(type, str_name, str_password, str_email, str_id, str_sex);
-        if (backgroundWork.login_code.equals("1")) {
+        backgroundWork.execute(type, str_name, str_password, str_email, str_id, str_sex); //傳參數(型態：註冊、註冊內容)
+        if (backgroundWork.login_code.equals("1")) { //若註冊成功，跳轉至主畫面
             Intent intent = new Intent();
             intent.setClass(signup.this, MainActivity.class);
             startActivity(intent);
