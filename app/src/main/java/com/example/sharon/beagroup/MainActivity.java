@@ -3,6 +3,8 @@ package com.example.sharon.beagroup;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,4 +19,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
         }
     }
+    public void openAccount(View view){
+        startActivity(new Intent(this, account.class));
+    } //按下個人帳戶進入畫面
 }

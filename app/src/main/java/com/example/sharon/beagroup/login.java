@@ -1,17 +1,19 @@
 package com.example.sharon.beagroup;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import static android.support.v4.content.ContextCompat.startActivity;
-
 public class login extends AppCompatActivity {
 
-    EditText edUsername, edUserpwd;
+    EditText edUserid, edUserpwd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,25 +21,32 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Get Reference to variables
-        edUsername = (EditText) findViewById(R.id.usrname);
+        edUserid = (EditText) findViewById(R.id.id);
         edUserpwd = (EditText) findViewById(R.id.pwd);
 
     }
 
     public void onLogin(View view){
 
-        String username = edUsername.getText().toString();
+        String userid = edUserid.getText().toString();
         String password = edUserpwd.getText().toString();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(login.this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("USER",userid);
+        editor.apply();
         String type = "login";
         BackgroundWork backgroundWork = new BackgroundWork(this);
-        backgroundWork.execute(type, username,password); //傳參數(型態：登入、登入內容)
+        backgroundWork.execute(type, userid,password); //傳參數(型態：登入、登入內容)
        if(backgroundWork.login_code.equals("1")){ //若登入成功，跳轉至主畫面
-            Intent intent = new Intent();
-            intent.setClass(login.this, MainActivity.class);
-            startActivity(intent);
+
+           Intent intent = new Intent();
+           intent.setClass(login.this, MainActivity.class);
+           startActivity(intent);
         }
 
     }
+
+
 
     public void openSignup(View view){
         startActivity(new Intent(this, signup.class));
@@ -45,9 +54,7 @@ public class login extends AppCompatActivity {
 
 
 
-    public interface AsyncResponse {
-        void processFinish(String output);
-    }
+
 
 
 

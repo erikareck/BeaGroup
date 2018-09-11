@@ -29,6 +29,13 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="sign_up">SIGN UP!</string>
+    <string name="item">item</string>
+    <string name="subitem">subitem</string>
+    <string name="todo">TODO</string>
+    <string name="更改">更改</string>
+    <string name="testing">testing</string>
 
 
 </resources>
+
+

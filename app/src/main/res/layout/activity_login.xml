@@ -14,7 +14,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="76dp"
-        app:layout_constraintBottom_toTopOf="@+id/usrname"
+        app:layout_constraintBottom_toTopOf="@+id/id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -22,7 +22,7 @@
         android:contentDescription="@string/logo"/>
 
     <EditText
-        android:id="@+id/usrname"
+        android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -30,10 +30,10 @@
         android:layout_marginTop="224dp"
         android:background="@drawable/edittext_design"
         android:ems="10"
-        android:textColor="#F0EEEE"
         android:gravity="center"
-        android:hint="@string/username"
+        android:hint="@string/id"
         android:inputType="textPersonName"
+        android:textColor="#F0EEEE"
         android:textColorHint="#F0EEEE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usrname" />
+        app:layout_constraintTop_toBottomOf="@+id/id" />
 
     <Button
         android:id="@+id/login"

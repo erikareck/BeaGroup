@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -37,7 +39,7 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
         String signup_url = "http://140.113.73.42/signup.php";
         if(type.equals("login")){
             try {
-                String user_name = params[1];
+                String user_id = params[1];
                 String password = params[2];
                 URL url  = new URL(login_url); //URL物件
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection(); //創建http連接
@@ -46,7 +48,7 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
                 httpURLConnection.setDoOutput(true); //是否從httpURLConnection讀入:true
                 OutputStream outputStream = httpURLConnection.getOutputStream(); //得到subprocess的輸出流
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8")); //outputStreamWriter為character變成byte stream的橋樑，在此轉成UTF-8；放入緩衝區(可加快速度)
-                String post_data = URLEncoder.encode("user_name","UTF-8")+"="+URLEncoder.encode(user_name, "UTF-8")
+                String post_data = URLEncoder.encode("user_id","UTF-8")+"="+URLEncoder.encode(user_id, "UTF-8")
                         +"&"+URLEncoder.encode("password", "UTF-8")+"="+URLEncoder.encode(password, "UTF-8"); //設定資料POST的格式，且將讀取到的參數assign給要傳到php的變數(較前面的)
                 bufferedWriter.write(post_data);//將post_data寫入緩衝區
                 bufferedWriter.flush(); //刷新該stream中的緩衝，將缓衝數據寫到目的文件中(login.php)
@@ -134,6 +136,8 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
 
 
 
+
+
         return  null;
 
 
@@ -157,6 +161,7 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
 
         Toast.makeText(context, result, Toast.LENGTH_LONG).show(); //以Toast顯示結果(登入成功/失敗、註冊成功/失敗)
         if(result.equals("Login success")) { //若登入成功則結束此context
+
             ((Activity) context).finish();
         }
         if(result.equals("Signup  success")) { //若註冊成功則結束此context
