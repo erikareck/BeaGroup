@@ -18,12 +18,14 @@
         app:layout_constraintBottom_toTopOf="@+id/account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/boy" />
+         />
 
     <ListView
         android:id="@+id/account"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="250dp"
-        />
+        >
+
+    </ListView>
 </android.support.constraint.ConstraintLayout>

@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,11 +38,22 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 public class account extends AppCompatActivity {
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^"            //String 開頭
+                    + "(?=.*[0-9])"       //至少一數字
+                    + "(?=.*[a-zA-Z])"   //至少一字母
+                    + "(?=\\S+$)"         //不可有空白
+                    + ".{5,12}"          //長度介於5~12
+                    + "$");              //String結尾
 
+    //EditText name, email, password, password_con;
     ListView listView;
     ImageView imageView;
+    String gender = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,6 +61,7 @@ public class account extends AppCompatActivity {
         setContentView(R.layout.activity_account);
         listView = (ListView)findViewById(R.id.account);
         imageView = (ImageView)findViewById(R.id.sex_pic);
+
         getJSON("http://140.113.73.42/account.php");
 
 
@@ -58,24 +74,137 @@ public class account extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             LayoutInflater inflater = LayoutInflater.from(account.this);
-            final View v = inflater.inflate(R.layout.alertdialog_use, null);
+            final View v = LayoutInflater.from(account.this).inflate(R.layout.alertdialog_use, null);
+            final View v2 = LayoutInflater.from(account.this).inflate(R.layout.alertdialog_pwd, null);
             switch (position) {
                 case 0:
-                    new AlertDialog.Builder(account.this).setTitle("通知").setMessage("ID無法更改").show();
+                    new AlertDialog.Builder(account.this).setTitle("通知")
+                            .setMessage("ID無法更改")
+                            .setPositiveButton("確定", new DialogInterface.OnClickListener(){
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            }).show();
                     break;
                 case 1:
-                    new AlertDialog.Builder(account.this).setTitle("更改名字").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(account.this).setTitle("更改名字")
+                            .setView(v)
+                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            EditText editText = (EditText) (v.findViewById(R.id.change_field));
-                            Toast.makeText(getApplicationContext(), "你的名字是" +
-
-                                    editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                            EditText name = (EditText) v.findViewById(R.id.alterD);
+                            String ch_name = name.getText().toString();
+                            String result="";
+                            if(ch_name.trim().isEmpty()) {
+                                Toast.makeText(getApplicationContext(), "不可為空白", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                try {
+                                    result = new changeInfo(account.this).execute("name", ch_name).get();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            finish();
+                            startActivity(getIntent());
+                            if(result.equals("1")){
+                                Toast.makeText(getApplicationContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(),  "修改失敗", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }).show();
+                    })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
                     break;
                 case 2:
-                    new AlertDialog.Builder(account.this).setTitle("測試").setMessage("更改MAIL").show();
+                    new AlertDialog.Builder(account.this).setTitle("更改email")
+                            .setView(v)
+                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    EditText editText = (EditText) v.findViewById(R.id.alterD);
+                                    String ch_mail= editText.getText().toString();
+                                    String result="";
+                                    if(ch_mail.trim().isEmpty()){
+                                        Toast.makeText(getApplicationContext(), "不可為空白", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else if(!Patterns.EMAIL_ADDRESS.matcher(ch_mail).matches()){
+                                        Toast.makeText(getApplicationContext(), "請輸入有效email", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        try {
+                                            result = new changeInfo(account.this).execute("email", ch_mail).get();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    finish();
+                                    startActivity(getIntent());
+                                    if(result.equals("1")){
+                                        Toast.makeText(getApplicationContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),  "修改失敗", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
+                    break;
+                case 3:
+                    new AlertDialog.Builder(account.this).setTitle("更改密碼")
+                            .setView(v2)
+                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    EditText editText = (EditText) v2.findViewById(R.id.alterD_pwd);
+                                    EditText editText2 = (EditText) v2.findViewById(R.id.alterD_pwdcon);
+                                    String ch_pwd= editText.getText().toString();
+                                    String ch_pwdcon = editText2.getText().toString();
+                                    String result="";
+                                    if(ch_pwd.trim().isEmpty()||ch_pwdcon.trim().isEmpty()){
+                                        Toast.makeText(getApplicationContext(), "不可為空白", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else if(!PASSWORD_PATTERN.matcher(ch_pwd).matches()){
+                                        Toast.makeText(getApplicationContext(), "至少須一字母、一數字、長度介於5~12", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else if(!ch_pwd.equals(ch_pwdcon)){
+                                        Toast.makeText(getApplicationContext(), "密碼請輸入一致", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        try {
+                                            result = new changeInfo(account.this).execute("password", ch_pwd).get();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    finish();
+                                    startActivity(getIntent());
+                                    if(result.equals("1")){
+                                        Toast.makeText(getApplicationContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),  "修改失敗", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
                     break;
                 default:
                     Toast.makeText(account.this,"沒有", Toast.LENGTH_SHORT).show();
@@ -85,6 +214,7 @@ public class account extends AppCompatActivity {
         }
     };
 
+//從資料庫抓資料
     private void getJSON(final String urlWebService){
         class  GetJSON extends AsyncTask<Void, Void, String>{
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(account.this);
@@ -98,7 +228,7 @@ public class account extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 try {
                     loadIntoView(s);
                 }catch (JSONException e){
@@ -141,13 +271,15 @@ public class account extends AppCompatActivity {
         getJSON.execute();
     }
 
+//將JSON的值存入array
     private void loadIntoView(String json) throws JSONException{
-        String  Item[] = {"ID", "使用者名稱", "E-Mail"};
+        String  Item[] = {"ID", "使用者名稱", "E-Mail","修改密碼"};
         JSONArray jsonArray = new JSONArray(json);
-        String[] AccountInfo = new String[3];
+        String[] AccountInfo = new String[4];
 
 
-        for(int i =0; i<3; i++){
+
+        for(int i =0; i<4; i++){
             JSONObject obj = jsonArray.getJSONObject(0);
             if(i==0)
                 AccountInfo[i] = obj.getString("user_id");
@@ -155,11 +287,21 @@ public class account extends AppCompatActivity {
                 AccountInfo[i] = obj.getString("name");
             else if(i==2)
                 AccountInfo[i] = obj.getString("email");
+            else if(i==3)
+                gender = obj.getString("sex");
+            else if(i==4)
+                AccountInfo[i] = "";
         }
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), Item, AccountInfo);
         listView.setAdapter(customAdapter);
         listView.setOnItemClickListener(onClickListView);
+        if(gender.equals("F"))
+            imageView.setImageResource(R.drawable.girl);
+        else if(gender.equals("M"))
+            imageView.setImageResource(R.drawable.boy);
     }
+
+
 
 
 }

@@ -85,7 +85,7 @@ public class signup extends AppCompatActivity{
             return false;
         }
         else if(!PASSWORD_PATTERN.matcher(password.getText().toString()).matches()){
-            passwordlayout.setError("至少須一字母、一數字、長度介於5~12且不可有空白");
+            passwordlayout.setError("至少須一字母、一數字、長度介於5~12");
             return false;
         }
         else{
@@ -132,7 +132,7 @@ public class signup extends AppCompatActivity{
             return false;
         }
         else if(!ID_PATTERN.matcher(id.getText().toString()).matches()){
-            idlayout.setError("至少須一字母、長度介於6~15且不可有空白");
+            idlayout.setError("至少須一字母、長度介於6~15");
             return false;
 
         }
