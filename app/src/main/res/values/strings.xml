@@ -34,6 +34,18 @@
     <string name="todo">TODO</string>
     <string name="更改">更改</string>
     <string name="testing">testing</string>
+    <string name="mac">mac</string>
+    <string name="major">major</string>
+    <string name="minor">minor</string>
+    <string name="rssi">rssi</string>
+    <string name="measuredpower">measuredpower</string>
+    <string name="timestamp">timestamp</string>
+    <string name="lemon">Lemon</string>
+    <string name="b9407f30_f5f8_466e_aff9_25556b57fe6d">B9407F30-F5F8-466E-AFF9-25556B57FE6D</string>
+    <string name="B1_info">TextView</string>
+    <string name="B2_info">TextView</string>
+    <string name="B3_info">TextView</string>
+
 
 
 </resources>

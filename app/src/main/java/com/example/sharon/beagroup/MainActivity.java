@@ -22,4 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public void openAccount(View view){
         startActivity(new Intent(this, account.class));
     } //按下個人帳戶進入畫面
+    public void showMyLocation(View view){
+        Intent intent = new Intent(this, showBeacons.class);
+        startActivity(intent);
+    }
 }
