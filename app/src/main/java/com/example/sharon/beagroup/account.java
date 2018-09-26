@@ -2,22 +2,16 @@ package com.example.sharon.beagroup;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,19 +21,16 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class account extends AppCompatActivity {
     private static final Pattern PASSWORD_PATTERN =
@@ -52,7 +43,8 @@ public class account extends AppCompatActivity {
 
     //EditText name, email, password, password_con;
     ListView listView;
-    ImageView imageView;
+    //ImageView imageView;
+    CircleImageView circleImageView;
     String gender = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +52,8 @@ public class account extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         listView = (ListView)findViewById(R.id.account);
-        imageView = (ImageView)findViewById(R.id.sex_pic);
+        //imageView = (ImageView)findViewById(R.id.sex_pic);
+        circleImageView = (CircleImageView)findViewById(R.id.searchImage);
 
         getJSON("http://140.113.73.42/account.php");
 
@@ -295,10 +288,14 @@ public class account extends AppCompatActivity {
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), Item, AccountInfo);
         listView.setAdapter(customAdapter);
         listView.setOnItemClickListener(onClickListView);
-        if(gender.equals("F"))
+        /*if(gender.equals("F"))
             imageView.setImageResource(R.drawable.girl);
         else if(gender.equals("M"))
-            imageView.setImageResource(R.drawable.boy);
+            imageView.setImageResource(R.drawable.boy);*/
+        if(gender.equals("F"))
+            circleImageView.setImageResource(R.drawable.girl);
+        else if(gender.equals("M"))
+            circleImageView.setImageResource(R.drawable.boy);
     }
 
 

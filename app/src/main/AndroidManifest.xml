@@ -25,8 +25,8 @@
         app to run.
         -->
         <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
+            android:name="android.app.default_searchable"
+            android:value=".lockFriend" />
 
         <activity
             android:name=".login"
@@ -36,7 +36,16 @@
             android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".account" />
-        <activity android:name=".showBeacons"></activity>
+        <activity android:name=".showBeacons" />
+        <activity android:name=".lockFriend" android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

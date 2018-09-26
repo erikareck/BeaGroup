@@ -26,4 +26,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, showBeacons.class);
         startActivity(intent);
     }
+
+    public void openLock(View view){
+        startActivity(new Intent(this, lockFriend.class));
+    } //按下個人帳戶進入畫面
 }
