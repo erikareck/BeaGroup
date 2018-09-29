@@ -28,6 +28,7 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
     Context context;
     String login_code="";
     String signup_code="";
+    SharedPreferences preferences;
     BackgroundWork(Context ctx){
         context = ctx;
     }
@@ -161,7 +162,7 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
 
         Toast.makeText(context, result, Toast.LENGTH_LONG).show(); //以Toast顯示結果(登入成功/失敗、註冊成功/失敗)
         if(result.equals("Login success")) { //若登入成功則結束此context
-
+            SaveSharedPreference.setLog(context, true);
             ((Activity) context).finish();
         }
         if(result.equals("Signup  success")) { //若註冊成功則結束此context

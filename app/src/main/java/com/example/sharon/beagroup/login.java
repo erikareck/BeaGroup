@@ -24,16 +24,14 @@ public class login extends AppCompatActivity {
         edUserid = (EditText) findViewById(R.id.id);
         edUserpwd = (EditText) findViewById(R.id.pwd);
 
+
     }
 
     public void onLogin(View view){
 
         String userid = edUserid.getText().toString();
         String password = edUserpwd.getText().toString();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(login.this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("USER",userid);
-        editor.apply();
+        SaveSharedPreference.setID(login.this, userid);
         String type = "login";
         BackgroundWork backgroundWork = new BackgroundWork(this);
         backgroundWork.execute(type, userid,password); //傳參數(型態：登入、登入內容)

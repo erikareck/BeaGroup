@@ -210,9 +210,7 @@ public class account extends AppCompatActivity {
 //從資料庫抓資料
     private void getJSON(final String urlWebService){
         class  GetJSON extends AsyncTask<Void, Void, String>{
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(account.this);
-            String currentUser = preferences.getString("USER", "null");
-
+            String currentUser = SaveSharedPreference.getID(account.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
