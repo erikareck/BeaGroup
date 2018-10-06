@@ -31,4 +31,9 @@ public class SaveSharedPreference {
     {
         return getSharedPreferences(ctx).getBoolean("logged", false);
     }
+
+    public static void clear(Context ctx){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.clear().commit();
+    }
 }

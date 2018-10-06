@@ -2,17 +2,24 @@ package com.example.sharon.beagroup;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -45,7 +52,21 @@ public class account extends AppCompatActivity {
     ListView listView;
     //ImageView imageView;
     CircleImageView circleImageView;
+    TextView textView;
+    Button logout;
     String gender = "";
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -54,14 +75,37 @@ public class account extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.account);
         //imageView = (ImageView)findViewById(R.id.sex_pic);
         circleImageView = (CircleImageView)findViewById(R.id.searchImage);
-
+        textView = (TextView)findViewById(R.id.account_name);
+        logout = (Button)findViewById(R.id.logout_btn);
         getJSON("http://140.113.73.42/account.php");
 
 
-        //CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), Item, AccountInfo);
-        //listView.setAdapter(customAdapter);
-
     }
+
+    /*public void showPopup(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_logout, popup.getMenu());
+        popup.show();
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                SaveSharedPreference.clear(account.this);
+                Intent intent = new Intent(getApplicationContext(), login.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+    }*/
+
+    public void logout(View view){
+        SaveSharedPreference.clear(account.this);
+        Intent intent = new Intent(getApplicationContext(), login.class);
+        startActivity(intent);
+    }
+
+
 
     private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener(){
         @Override
@@ -199,6 +243,7 @@ public class account extends AppCompatActivity {
                                 }
                             }).show();
                     break;
+
                 default:
                     Toast.makeText(account.this,"沒有", Toast.LENGTH_SHORT).show();
 
@@ -286,10 +331,7 @@ public class account extends AppCompatActivity {
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), Item, AccountInfo);
         listView.setAdapter(customAdapter);
         listView.setOnItemClickListener(onClickListView);
-        /*if(gender.equals("F"))
-            imageView.setImageResource(R.drawable.girl);
-        else if(gender.equals("M"))
-            imageView.setImageResource(R.drawable.boy);*/
+        textView.setText(AccountInfo[1]);
         if(gender.equals("F"))
             circleImageView.setImageResource(R.drawable.girl);
         else if(gender.equals("M"))

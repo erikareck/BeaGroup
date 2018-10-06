@@ -14,6 +14,11 @@ public class login extends AppCompatActivity {
 
     EditText edUserid, edUserpwd;
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finishAffinity();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +42,8 @@ public class login extends AppCompatActivity {
         backgroundWork.execute(type, userid,password); //傳參數(型態：登入、登入內容)
        if(backgroundWork.login_code.equals("1")){ //若登入成功，跳轉至主畫面
 
-           Intent intent = new Intent();
-           intent.setClass(login.this, MainActivity.class);
+           Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+           //intent.setClass(login.this, MainActivity.class);
            startActivity(intent);
         }
 
