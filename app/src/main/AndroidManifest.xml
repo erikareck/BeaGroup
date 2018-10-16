@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".GlobalVariable"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -37,14 +37,20 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".account" />
         <activity android:name=".showBeacons" />
-        <activity android:name=".lockFriend" android:launchMode="singleTop">
+        <activity
+            android:name=".lockFriend"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEARCH" />
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-
         </activity>
+
+        <service
+            android:name=".periodicallyUploadService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

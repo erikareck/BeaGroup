@@ -33,27 +33,30 @@
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:typeface="sans" />
+            android:typeface="sans"
+            android:visibility="gone" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="31dp"
-            android:layout_weight="0" />
+            android:layout_weight="0"
+            android:visibility="gone" />
 
         <android.support.v7.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0">
+            android:layout_weight="0"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/Lemon"
                 android:layout_width="100dp"
                 android:layout_height="130dp"
                 android:adjustViewBounds="false"
+                android:contentDescription="@string/todo"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
-                app:srcCompat="@drawable/lemon_large"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/lemon_large" />
 
             <TextView
                 android:id="@+id/B1"
@@ -65,16 +68,17 @@
         <android.support.v7.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0">
+            android:layout_weight="0"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/Candy"
                 android:layout_width="100dp"
                 android:layout_height="130dp"
+                android:contentDescription="@string/todo"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
-                app:srcCompat="@drawable/candy_large"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/candy_large" />
 
             <TextView
                 android:id="@+id/B2"
@@ -86,16 +90,17 @@
         <android.support.v7.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="147dp"
-            android:layout_weight="0">
+            android:layout_weight="0"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/Beetroot"
                 android:layout_width="100dp"
                 android:layout_height="130dp"
+                android:contentDescription="@string/todo"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
-                app:srcCompat="@drawable/beetroot_large"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/beetroot_large" />
 
             <TextView
                 android:id="@+id/B3"
@@ -114,6 +119,22 @@
             android:textStyle="bold"
             app:layout_column="1"
             app:layout_row="1" />
+
+        <Button
+            android:id="@+id/button_startService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:onClick="start_Service"
+            android:text="START SERVICE" />
+
+        <Button
+            android:id="@+id/button_stopService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:onClick="stop_Service"
+            android:text="STOP SERVICE" />
 
     </LinearLayout>
 

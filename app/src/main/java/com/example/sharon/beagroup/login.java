@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -29,7 +30,6 @@ public class login extends AppCompatActivity {
         edUserid = (EditText) findViewById(R.id.id);
         edUserpwd = (EditText) findViewById(R.id.pwd);
 
-
     }
 
     public void onLogin(View view){
@@ -45,7 +45,8 @@ public class login extends AppCompatActivity {
            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
            //intent.setClass(login.this, MainActivity.class);
            startActivity(intent);
-        }
+
+       }
 
     }
 

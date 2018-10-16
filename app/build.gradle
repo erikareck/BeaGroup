@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.sharon.beagroup"
-        minSdkVersion 26
+        minSdkVersion 25
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -21,6 +21,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
     }
 }
 
@@ -40,7 +42,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0-alpha1'
-
-
     implementation 'com.android.support:gridlayout-v7:28.0.0-alpha1'
 }

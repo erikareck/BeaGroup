@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,6 +41,10 @@ import java.util.regex.Pattern;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class account extends AppCompatActivity {
+
+    //Erika 2018.10.15試圖關閉不使用之Activity
+    public static account instance = null;
+
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^"            //String 開頭
                     + "(?=.*[0-9])"       //至少一數字
@@ -79,6 +84,8 @@ public class account extends AppCompatActivity {
         logout = (Button)findViewById(R.id.logout_btn);
         getJSON("http://140.113.73.42/account.php");
 
+        //Erika 2018.10.15關閉activity
+        instance = this;
 
     }
 
@@ -100,9 +107,22 @@ public class account extends AppCompatActivity {
     }*/
 
     public void logout(View view){
+        /**Stop Background Service**/
+        Intent stopIntent = new Intent(this, periodicallyUploadService.class);
+        stopService(stopIntent);
+
         SaveSharedPreference.clear(account.this);
         Intent intent = new Intent(getApplicationContext(), login.class);
         startActivity(intent);
+
+        //Erika 2018.10.15試圖關閉不使用之Activity
+        account.instance.finish();
+        MainActivity.instance.finish();
+
+        //Log.d("logout", "start new MainActivity");
+        //Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+        //startActivity(mainActivity);
+
     }
 
 
