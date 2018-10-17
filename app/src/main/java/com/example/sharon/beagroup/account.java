@@ -107,9 +107,6 @@ public class account extends AppCompatActivity {
     }*/
 
     public void logout(View view){
-        /**Stop Background Service**/
-        Intent stopIntent = new Intent(this, periodicallyUploadService.class);
-        stopService(stopIntent);
 
         SaveSharedPreference.clear(account.this);
         Intent intent = new Intent(getApplicationContext(), login.class);
@@ -117,11 +114,6 @@ public class account extends AppCompatActivity {
 
         //Erika 2018.10.15試圖關閉不使用之Activity
         account.instance.finish();
-        MainActivity.instance.finish();
-
-        //Log.d("logout", "start new MainActivity");
-        //Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-        //startActivity(mainActivity);
 
     }
 

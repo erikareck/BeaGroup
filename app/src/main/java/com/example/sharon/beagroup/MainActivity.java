@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Log.d("Activity OnCreate() order", "MainActivity.onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -32,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(!SaveSharedPreference.getLog(MainActivity.this))
         {
+            //未登入狀態跳到login
+
             // call Login Activity
             Intent intent = new Intent(this, login.class);
             startActivity(intent);
         }
-
 
     }
     public void openAccount(View view){
@@ -55,5 +58,20 @@ public class MainActivity extends AppCompatActivity {
     protected  void onResume(){
         super.onResume();
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        boolean serviceRunning = serviceUtils.isServiceRunning(this, "com.example.sharon.beagroup.periodicallyUploadService");
+
+        if (serviceRunning){
+            Log.d("MainActivity.onRestart()", "service [periodicallyUploadService] is running");
+        }else{
+            Log.d("MainActivity.onRestart()", "service [periodicallyUploadService] is't running");
+            Intent startServiceIntent = new Intent(this, periodicallyUploadService.class);
+            startService(startServiceIntent);
+            Log.d("MainActivity.onRestart()", "START service [periodicallyUploadService]");
+        }
     }
 }

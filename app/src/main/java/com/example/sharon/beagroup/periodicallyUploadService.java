@@ -65,7 +65,7 @@ public class periodicallyUploadService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand() executed");
-        timer.schedule(action, 10000, 8000);
+        timer.schedule(action, 10000, 5000);
         return super.onStartCommand(intent, flags, startId);
         //return START_NOT_STICKY;
         //Timer:

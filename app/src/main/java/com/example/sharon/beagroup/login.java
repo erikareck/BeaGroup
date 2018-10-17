@@ -15,6 +15,7 @@ public class login extends AppCompatActivity {
 
     EditText edUserid, edUserpwd;
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -23,12 +24,29 @@ public class login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("Activity OnCreate() order", "login.onCreate()");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         // Get Reference to variables
         edUserid = (EditText) findViewById(R.id.id);
         edUserpwd = (EditText) findViewById(R.id.pwd);
+
+
+        /**Stop Background Service**/
+
+        boolean serviceRunning = serviceUtils.isServiceRunning(this, "com.example.sharon.beagroup.periodicallyUploadService");
+
+        if (serviceRunning){
+            Log.d("login.onCreate()", "service [periodicallyUploadService] is running");
+            Intent stopIntent = new Intent(this, periodicallyUploadService.class);
+            stopService(stopIntent);
+            Log.d("login.onCreate()", "STOP service [periodicallyUploadService]");
+        }else{
+            Log.d("login.onCreate()", "service [periodicallyUploadService] isn't running");
+        }
 
     }
 
@@ -40,6 +58,9 @@ public class login extends AppCompatActivity {
         String type = "login";
         BackgroundWork backgroundWork = new BackgroundWork(this);
         backgroundWork.execute(type, userid,password); //傳參數(型態：登入、登入內容)
+
+
+
        if(backgroundWork.login_code.equals("1")){ //若登入成功，跳轉至主畫面
 
            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
