@@ -60,9 +60,13 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1")); //InputStreamReader為byte stream轉character，且轉成iso-8859-1；並放在緩衝區
                 String result = "";
 
+
                 while((login_code = bufferedReader.readLine()) != null){ //從緩衝區讀取數據
-                    if(login_code.equals("1")) //資料正確
-                        result+="Login success";
+                    if(login_code.equals("1")) { //資料正確
+
+                        result += "Login success";
+
+                    }
                     else if(login_code.equals("0"))  //資料錯誤
                         result+="Login failed";
 
@@ -112,9 +116,16 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
                 String result = "";
 
+                uploadLocation upload = new uploadLocation();
+
                 while((signup_code = bufferedReader.readLine()) != null){
-                    if(signup_code.equals("1")) //資料正確
-                        result+="Signup  success";
+                    if(signup_code.equals("1")) { //資料正確
+
+                        //Erika 2018.10.18 first sign up upload default usrLocation: unknown
+                        //Log.d("backgroundWork.java","upload.execute(id, unknown)");
+                        upload.execute(id, "unknown");
+                        result += "Signup  success";
+                    }
                     else  //資料錯誤
                         result+="signup  failed";
 

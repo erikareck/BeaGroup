@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 groupID = groupIDGenerator();
                 SaveSharedPreference.setGroup_ID(MainActivity.this, groupID);
                 Log.d("group_id","give "+ userID+" a Group_ID - "+ SaveSharedPreference.getGroup_ID(this));
+                assignGroupID assignGID = new assignGroupID();
+                assignGID.execute(userID, groupID);
             }else{
                 Log.d("group_id",userID+" already has a Group_ID - "+ groupID);
             }
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         String token;
         String randomChar = "";
         Random r = new Random();
-        numOfChar = (int)(Math.random()*7);
+        numOfChar = (int)(Math.random()*5+1);
         for (int i = 0; i<numOfChar; i++){
             downCase = r.nextInt(26)+97;
             randomChar += String.valueOf((char)downCase);
