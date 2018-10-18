@@ -34,7 +34,16 @@ public class SaveSharedPreference {
         return getSharedPreferences(ctx).getString("Group_ID","null");
     }
 
+    /**Set friendCheckCode**/
 
+    public static void setFriendCheckCode(Context ctx, String friendCheckCode){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString("FriendCheckCode", friendCheckCode).apply();
+    }
+
+    public static String getFriendCheckCode(Context ctx){
+        return getSharedPreferences(ctx).getString("FriendCheckCode","null");
+    }
 
     public static void setLog(Context ctx, boolean status)
     {

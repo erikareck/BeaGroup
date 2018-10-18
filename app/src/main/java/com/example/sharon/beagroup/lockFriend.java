@@ -3,6 +3,7 @@ package com.example.sharon.beagroup;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,8 +21,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.estimote.coresdk.common.config.EstimoteSDK.getApplicationContext;
 
 
 public class lockFriend extends AppCompatActivity{
@@ -31,6 +35,7 @@ public class lockFriend extends AppCompatActivity{
     String[] UserInfo = new String[3];
     String result="";
     CircleImageView circleImageView;
+    String group_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +46,34 @@ public class lockFriend extends AppCompatActivity{
         textView = (TextView)findViewById(R.id.searchName);
         circleImageView = (CircleImageView)findViewById(R.id.searchImage);
 
+        group_id = SaveSharedPreference.getGroup_ID(this);
+
+
     }
 
     public void openJSON(View view){
         getJSON("http://140.113.73.42/search.php");
+
     }
 
 
     public void getJSON(final String urlWebService){
+        MyApplication myApplication = (MyApplication) getApplicationContext();
         class  GetJSON extends AsyncTask<Void, Void, String>{
 
             //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(account.this);
             //String currentUser = preferences.getString("USER", "null");
             String IDText = searchID.getText().toString();
 
-
+            //checkFriendID checkFID = new checkFriendID();
+            //MyApplication myApplication = (MyApplication) getApplicationContext();
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                String IDText = searchID.getText().toString();
+                checkFriendID checkFID = new checkFriendID();
+                checkFID.execute(group_id, IDText);
             }
 
             @Override
@@ -68,6 +82,23 @@ public class lockFriend extends AppCompatActivity{
                 try {
 
                     loadIntoView(s);
+
+                    //checkFID.execute(group_id, IDText);
+                    Log.d("lockFriend.java","checkFID.execute()");
+                    //String isFriend = myApplication.getFriendCheck();
+                    String isFriend = SaveSharedPreference.getFriendCheckCode(getApplicationContext());
+                    if (isFriend != ""){
+                        if (isFriend == "1"){
+                            Log.d("lockFriend", IDText + " is already a friend.");
+                        }else{
+                            Log.d("lockFriend", IDText + " is not a friend.");
+                        }
+                    }else{
+                        Log.d("lockFriend", "friendCheck is null");
+                    }
+                    //myApplication.setFriendCheck("");
+                    SaveSharedPreference.setFriendCheckCode(lockFriend.this, "");
+                    Log.d("lockFriend", "after friendCheck, setting FriendCheckCode to default value: "+ SaveSharedPreference.getFriendCheckCode(lockFriend.this));
 
                 }catch (JSONException e){
                     //e.printStackTrace();
@@ -119,6 +150,9 @@ public class lockFriend extends AppCompatActivity{
 
     //將JSON的值存入array
     private void loadIntoView(String json) throws JSONException{
+
+        Log.d("lockFriend", "loadIntoView");
+
         String gender = "";
         if(!json.equals("")) {
             JSONArray jsonArray = new JSONArray(json);
@@ -145,6 +179,7 @@ public class lockFriend extends AppCompatActivity{
             textView.setText("HIhi"+UserInfo[0]);
         }*/
     }
+
 }
 
 

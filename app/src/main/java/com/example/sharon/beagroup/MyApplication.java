@@ -14,13 +14,21 @@ public class MyApplication extends Application {
     public Beacon B2;//65251: Furniture
     public Beacon B3;//34469: Grocery
     public String userLocation; //user's location
-
+    public String friendCheck;
 
     @Override
     public void onCreate() {
         super.onCreate();
         userLocation = "unknown";
+        friendCheck = "";
 
+    }
+
+    public void setFriendCheck(String flag){
+        this.friendCheck = flag;
+    }
+    public String getFriendCheck(){
+        return friendCheck;
     }
 /**
     public void showNotification(String title, String message) {
