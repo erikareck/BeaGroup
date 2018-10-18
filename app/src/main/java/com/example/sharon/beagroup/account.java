@@ -108,9 +108,17 @@ public class account extends AppCompatActivity {
 
     public void logout(View view){
 
+        //Erika 2018.10.18 SET Group_ID & Block default value (unknown & null) while logout
+        String userID = SaveSharedPreference.getID(this);
+        uploadLocation uploadLoc = new uploadLocation();
+        assignGroupID assignGID = new assignGroupID();
+        uploadLoc.execute(userID, "unknown");
+        assignGID.execute(userID, "NULL");
+
         SaveSharedPreference.clear(account.this);
         Intent intent = new Intent(getApplicationContext(), login.class);
         startActivity(intent);
+
 
         //Erika 2018.10.15試圖關閉不使用之Activity
         account.instance.finish();

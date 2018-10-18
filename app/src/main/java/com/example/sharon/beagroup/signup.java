@@ -174,9 +174,6 @@ public class signup extends AppCompatActivity{
         backgroundWork.execute(type, str_name, str_password, str_email, str_id, str_sex); //傳參數(型態：註冊、註冊內容)
         if (backgroundWork.login_code.equals("1")) { //若註冊成功，跳轉至主畫面
 
-            //assignGroupID assignGID = new assignGroupID();
-            //assignGID.execute(str_id, "unknown");
-
             Intent intent = new Intent();
             intent.setClass(signup.this, MainActivity.class);
             startActivity(intent);

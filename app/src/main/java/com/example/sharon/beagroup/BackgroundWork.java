@@ -117,6 +117,7 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
                 String result = "";
 
                 uploadLocation upload = new uploadLocation();
+                assignGroupID assignGID = new assignGroupID();
 
                 while((signup_code = bufferedReader.readLine()) != null){
                     if(signup_code.equals("1")) { //資料正確
@@ -124,6 +125,7 @@ public class BackgroundWork extends AsyncTask<String, Void, String>{ //背景執
                         //Erika 2018.10.18 first sign up upload default usrLocation: unknown
                         //Log.d("backgroundWork.java","upload.execute(id, unknown)");
                         upload.execute(id, "unknown");
+                        assignGID.execute(id, "NULL");
                         result += "Signup  success";
                     }
                     else  //資料錯誤
