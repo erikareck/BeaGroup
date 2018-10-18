@@ -21,6 +21,21 @@ public class SaveSharedPreference {
         return getSharedPreferences(ctx).getString("USER", "null");
     }
 
+
+    //Erika 20181018 每次都入給予一個Unique的group_ID
+    /**Set Group_ID**/
+
+    public static void setGroup_ID(Context ctx, String group_ID){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString("Group_ID", group_ID).apply();
+    }
+
+    public static String getGroup_ID(Context ctx){
+        return getSharedPreferences(ctx).getString("Group_ID","null");
+    }
+
+
+
     public static void setLog(Context ctx, boolean status)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();

@@ -11,10 +11,18 @@ import android.widget.Toast;
 
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     //Erika 2018.10.15試圖關閉不使用之Activity
     public static MainActivity instance = null;
+    public static String userID;
+    public static String groupID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +31,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Erika 2018.10.15試圖關閉不使用之Activity
-        instance = this;
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
-        /**Start Background Service**/
-        Intent startServiceIntent = new Intent(this, periodicallyUploadService.class);
-        startService(startServiceIntent);
+        /**Erika 2018.10.15 Close Activity**/
+        instance = this;
+        /**Erika 2018.10.16 Start Background Scanning Service**/
+        /**Erika 2018.10.18 Recode Background Scanning service a class method**/
+        startScanningService();
 
         if(!SaveSharedPreference.getLog(MainActivity.this))
         {
@@ -63,15 +70,65 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart(){
         super.onRestart();
-        boolean serviceRunning = serviceUtils.isServiceRunning(this, "com.example.sharon.beagroup.periodicallyUploadService");
 
+        startScanningService();
+
+        userID = SaveSharedPreference.getID(this);
+        groupID = SaveSharedPreference.getGroup_ID(this);
+
+
+        if (userID != "null"){
+            if (groupID == "null"){
+                //產生Group_ID token (隨機)
+                groupID = groupIDGenerator();
+                SaveSharedPreference.setGroup_ID(MainActivity.this, groupID);
+                Log.d("group_id","give "+ userID+" a Group_ID - "+ SaveSharedPreference.getGroup_ID(this));
+            }else{
+                Log.d("group_id",userID+" already has a Group_ID - "+ groupID);
+            }
+        }
+
+    }
+
+    public void startScanningService(){
+        boolean serviceRunning = serviceUtils.isServiceRunning(this, "com.example.sharon.beagroup.periodicallyUploadService");
         if (serviceRunning){
-            Log.d("MainActivity.onRestart()", "service [periodicallyUploadService] is running");
+            Log.d("MainActivity.startScanningService()", "service [periodicallyUploadService] is running");
         }else{
-            Log.d("MainActivity.onRestart()", "service [periodicallyUploadService] is't running");
+            Log.d("MainActivity.startScanningService()", "service [periodicallyUploadService] is't running");
             Intent startServiceIntent = new Intent(this, periodicallyUploadService.class);
             startService(startServiceIntent);
-            Log.d("MainActivity.onRestart()", "START service [periodicallyUploadService]");
+            Log.d("MainActivity.startScanningService()", "START service [periodicallyUploadService]");
         }
+
+    }
+
+    public String groupIDGenerator(){
+        int downCase, numOfChar;
+        String token;
+        String randomChar = "";
+        Random r = new Random();
+        numOfChar = (int)(Math.random()*7);
+        for (int i = 0; i<numOfChar; i++){
+            downCase = r.nextInt(26)+97;
+            randomChar += String.valueOf((char)downCase);
+        }
+        //Log.d("token","randomChar: "+ randomChar);
+        token = Integer.toString((int)(Math.random()*1000000));
+        token = token + randomChar;
+        Log.d("token","token before shuffle: "+token);
+        String [] strList = token.split("");
+        List<String> charList = new ArrayList<String>(Arrays.asList(strList));
+        charList.remove(0);
+        Collections.shuffle(charList);
+        StringBuilder builder = new StringBuilder();
+        for (String s : charList){
+            builder.append(s);
+
+        }
+        token = builder.toString();
+        Log.d("token","token after shuffle: "+ token);
+
+        return token;
     }
 }
