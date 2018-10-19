@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,10 @@ public class lockFriend extends AppCompatActivity{
     String[] UserInfo = new String[3];
     String result="";
     CircleImageView circleImageView;
+
     String group_id;
+    Button buttonLock;
+    String friendCheckCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,7 @@ public class lockFriend extends AppCompatActivity{
         circleImageView = (CircleImageView)findViewById(R.id.searchImage);
 
         group_id = SaveSharedPreference.getGroup_ID(this);
-
+        buttonLock = (Button)findViewById(R.id.button_lock);
 
     }
 
@@ -103,6 +107,7 @@ public class lockFriend extends AppCompatActivity{
                 }catch (JSONException e){
                     //e.printStackTrace();
                     textView.setText("ID錯誤");
+                    buttonLock.setVisibility(View.INVISIBLE);
                     //Toast.makeText(getApplicationContext(), "ID錯誤", Toast.LENGTH_SHORT).show();
                 }
 
@@ -153,6 +158,9 @@ public class lockFriend extends AppCompatActivity{
 
         Log.d("lockFriend", "loadIntoView");
 
+        //buttonLock.setVisibility(View.VISIBLE);
+        showFollowingButton();
+
         String gender = "";
         if(!json.equals("")) {
             JSONArray jsonArray = new JSONArray(json);
@@ -178,6 +186,21 @@ public class lockFriend extends AppCompatActivity{
         /*if(!result.equals("error")){
             textView.setText("HIhi"+UserInfo[0]);
         }*/
+    }
+
+    public void showFollowingButton(){
+
+        //Erika 2018.10.19 追蹤按鈕(目前無邀請功能，直接追蹤)，文字可視整合過任意修改。
+        friendCheckCode = SaveSharedPreference.getFriendCheckCode(getApplicationContext());
+        if (friendCheckCode == "1"){
+            buttonLock.setVisibility(View.VISIBLE);
+            buttonLock.setText(R.string.following);//已追蹤
+            buttonLock.setClickable(false);//希望可以做到按鈕便灰色的，比較好辨識
+        }else{
+            buttonLock.setVisibility(View.VISIBLE);
+            buttonLock.setText(getString(R.string.follow));//開始追蹤
+            buttonLock.setClickable(true);
+        }
     }
 
 }
