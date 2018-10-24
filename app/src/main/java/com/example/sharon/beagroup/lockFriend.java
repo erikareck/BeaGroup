@@ -203,6 +203,15 @@ public class lockFriend extends AppCompatActivity{
         }
     }
 
+    public void lockFriend(View view){
+        String IDText = searchID.getText().toString();
+        InsertFriendList insertFriendList = new InsertFriendList();
+        insertFriendList.execute(group_id, IDText);
+        buttonLock.setVisibility(View.VISIBLE);
+        buttonLock.setText(R.string.following);//已追蹤
+        buttonLock.setClickable(false);//希望可以做到按鈕便灰色的，比較好辨識
+    }
+
 }
 
 

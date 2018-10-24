@@ -70,6 +70,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/logoutbtn_design"
+        android:onClick="lockFriend"
         android:text="@string/follow"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
