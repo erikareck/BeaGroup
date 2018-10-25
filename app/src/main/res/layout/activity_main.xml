@@ -17,6 +17,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/friend"
+        android:onClick="findFriends"
         android:text="@string/friend"
         android:textSize="0sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,8 +25,7 @@
         app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498"
-        android:onClick="showMyLocation"/>
+        app:layout_constraintVertical_bias="0.498" />
 
     <Button
         android:id="@+id/button2"
@@ -36,11 +36,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/product"
+        android:onClick="findMerchandise"
         android:text="@string/product"
         android:textSize="0sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.294"
+        app:layout_constraintHorizontal_bias="0.296"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498" />

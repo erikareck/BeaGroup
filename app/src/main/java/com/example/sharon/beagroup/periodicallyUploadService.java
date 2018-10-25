@@ -1,8 +1,15 @@
 package com.example.sharon.beagroup;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -47,6 +54,18 @@ public class periodicallyUploadService extends Service {
             if (!myLocation.equals(lastLocation)) {
                 upload.execute(currentUser, myApplication.userLocation);
                 Log.d(TAG, "UserLocation has been changed, upload.execute()");
+
+                switch (myLocation){
+                    case "Brunch Buffet"://buffet
+                        showNotification("燒烤周 12/18~12/25","You are near buffet", R.drawable.barbecue);
+                        break;
+                    case "Grocery"://grocery
+                        showNotification("布朗尼免費教學","You are near grocery", R.drawable.fancycrave);
+                        break;
+                    case "Furniture"://furniture
+                        showNotification("鮮活空間企劃","You are near furniture", R.drawable.toaheftiba);
+                        break;
+                }
             }
         }
     };
@@ -56,7 +75,7 @@ public class periodicallyUploadService extends Service {
     public void onCreate(){
         super.onCreate();
         Log.d(TAG, "onCreate() executed");
-
+        lastLocation = "startAPP";
         scanning();
 
     }
@@ -152,5 +171,34 @@ public class periodicallyUploadService extends Service {
             //Toast.makeText(getApplicationContext(), myApplication.userLocation, Toast.LENGTH_LONG).show();
 
         });
+    }
+
+    public void showNotification(String title, String message, int pictureID) {
+        Bitmap pic = BitmapFactory.decodeResource(getResources(), pictureID);
+        Intent notifyIntent = new Intent(this, MainActivity.class);
+        Intent advertisement = new Intent(this, findMerchandise.class);//改寫成廣告頁面.class即可
+        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
+                //new Intent[] { notifyIntent }, PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent[] { advertisement }, PendingIntent.FLAG_UPDATE_CURRENT);//打開APP尋找商品的頁面
+        Notification notification = new Notification.Builder(this)
+                //.setSmallIcon(android.R.drawable.ic_dialog_info)
+                //.setColor(Color.argb(1, 244, 92, 47))
+                .setColor(Color.rgb(244, 92, 47))
+                .setSmallIcon(R.drawable.baseline_shopping_basket_black_48)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setStyle(new Notification.BigPictureStyle().bigPicture(pic))
+                //.addAction(android.R.drawable.ic_menu_view, "VIEW", pendingIntent)
+                //.addAction(android.R.drawable.ic_delete, "DISMISS", )
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build();
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, notification);
+
+
     }
 }

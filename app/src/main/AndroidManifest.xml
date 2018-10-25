@@ -50,7 +50,10 @@
         <service
             android:name=".periodicallyUploadService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".findMerchandise" />
+        <activity android:name=".findFriends"></activity>
     </application>
 
 </manifest>

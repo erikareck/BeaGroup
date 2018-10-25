@@ -35,6 +35,7 @@ public class MyApplication extends Application {
         friendCheck = "";
 
         //2018.10.24 advertise
+        /**
         GlobalBeaconManager = new BeaconManager(getApplicationContext());
         GlobalBeaconManager.connect(new BeaconManager.ServiceReadyCallback() {
             @Override
@@ -70,6 +71,7 @@ public class MyApplication extends Application {
                 //showNotification("goodbye", "Your are leaving Beacon 14346: Buffet");
             }
         });
+         **/
     }
 
     public void setFriendCheck(String flag){

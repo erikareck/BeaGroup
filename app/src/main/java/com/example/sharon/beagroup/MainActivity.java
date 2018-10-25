@@ -61,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, lockFriend.class));
     } //按下個人帳戶進入畫面
 
+    public void findMerchandise(View view){
+        startActivity(new Intent(this, findMerchandise.class));
+    } //尋找商品
+
+    public void findFriends(View view){
+        startActivity(new Intent(this, findFriends.class));
+    }
     /**Very Important for Estimote SDK ranging method**/
     protected  void onResume(){
         super.onResume();
