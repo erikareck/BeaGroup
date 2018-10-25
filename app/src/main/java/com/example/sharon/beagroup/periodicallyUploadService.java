@@ -25,6 +25,7 @@ public class periodicallyUploadService extends Service {
     private BeaconRegion region;
     private Beacon minBeacon;
     private String myLocation;
+    private String lastLocation;
 
     /**NOT SUPPORT API**/
     public static final String TAG = "periodicallyUploadService.service";
@@ -42,8 +43,11 @@ public class periodicallyUploadService extends Service {
             String currentUser = preferences.getString("USER","null");
             //Log.d(TAG, currentUser);
             Log.d(TAG, "userID - "+ currentUser+" is near "+ myApplication.userLocation);
-            upload.execute(currentUser, myApplication.userLocation);
 
+            if (!myLocation.equals(lastLocation)) {
+                upload.execute(currentUser, myApplication.userLocation);
+                Log.d(TAG, "UserLocation has been changed, upload.execute()");
+            }
         }
     };
     Timer timer = new Timer();
@@ -117,8 +121,9 @@ public class periodicallyUploadService extends Service {
                         minBeacon = list.get(i);
                     }
                 }
-
+                lastLocation = myLocation;
                 switch (minBeacon.getMajor()) {
+
                     case 14346:
                         myLocation = "Brunch Buffet";
                         break;
@@ -139,7 +144,8 @@ public class periodicallyUploadService extends Service {
             }
 
             myApplication.userLocation = myLocation;
-            Log.d(TAG,"assign userlocation");
+            Log.d(TAG,"assign userlocation: " + myLocation);
+            Log.d(TAG, "lastLocation: " + lastLocation);
             //upload currentUser's location
             //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(showBeacons.this);
             //String currentUser = preferences.getString("USER","null");

@@ -57,10 +57,10 @@ public class MyApplication extends Application {
                         showNotification("燒烤周 12/18~12/25","You are near buffet", R.drawable.barbecue);
                         break;
                     case 34469://grocery
-                        showNotification("布朗尼免費教學","You are near grocery", R.drawable.toaheftiba);
+                        showNotification("布朗尼免費教學","You are near grocery", R.drawable.fancycrave);
                         break;
                     case 65251://furniture
-                        showNotification("鮮活空間企劃","You are near furniture", R.drawable.fancycrave);
+                        showNotification("鮮活空間企劃","You are near furniture", R.drawable.toaheftiba);
                         break;
                 }
             }
