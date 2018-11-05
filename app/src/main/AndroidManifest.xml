@@ -52,8 +52,11 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".findMerchandise" />
-        <activity android:name=".findFriends"></activity>
+        <activity android:name=".findMerchandise_furniture" />
+        <activity android:name=".findFriends" />
+        <activity android:name=".findMerchandise_Grocery" />
+        <activity android:name=".findMerchandise_Buffet" />
+        <activity android:name=".webBrowsing"></activity>
     </application>
 
 </manifest>

@@ -2,12 +2,12 @@ package com.example.sharon.beagroup;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        MyApplication myApplication = (MyApplication) getApplicationContext();
 
         /**Erika 2018.10.15 Close Activity**/
         instance = this;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+
     }
     public void openAccount(View view){
         startActivity(new Intent(this, account.class));
@@ -62,7 +64,21 @@ public class MainActivity extends AppCompatActivity {
     } //按下個人帳戶進入畫面
 
     public void findMerchandise(View view){
-        startActivity(new Intent(this, findMerchandise.class));
+
+        MyApplication myApplication = (MyApplication) getApplicationContext();
+        startActivity(new Intent(this, findMerchandise_furniture.class));
+        /**
+        if (myApplication.userLocation == "Furniture") {
+            //Log.d("MainActivity:findMerchandise", ""+myApplication.userLocation);
+            startActivity(new Intent(this, findMerchandise_furniture.class));
+        }else if (myApplication.userLocation == "Grocery"){
+            startActivity(new Intent(this, findMerchandise_furniture.class));
+        }else if (myApplication.userLocation == "Brunch Buffet"){
+            startActivity(new Intent(this, findMerchandise_Buffet.class));
+        }else{
+            //location is unknown ->
+        }
+         **/
     } //尋找商品
 
     public void findFriends(View view){

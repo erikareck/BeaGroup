@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".findMerchandise">
+    tools:context=".findMerchandise_Grocery">
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.google.android.youtube.player.YouTubePlayerView>
 
 </android.support.constraint.ConstraintLayout>

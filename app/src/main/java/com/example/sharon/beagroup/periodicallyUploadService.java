@@ -56,14 +56,14 @@ public class periodicallyUploadService extends Service {
                 Log.d(TAG, "UserLocation has been changed, upload.execute()");
 
                 switch (myLocation){
-                    case "Brunch Buffet"://buffet
-                        showNotification("燒烤周 12/18~12/25","You are near buffet", R.drawable.barbecue);
+                    case "Food Court"://buffet
+                        showNotification("2019 生｜活","You are near Food Court", R.drawable.barbecue, findMerchandise_Buffet.class);
                         break;
                     case "Grocery"://grocery
-                        showNotification("布朗尼免費教學","You are near grocery", R.drawable.fancycrave);
+                        showNotification("布朗尼免費教學","You are near grocery", R.drawable.fancycrave, findMerchandise_Grocery.class);
                         break;
                     case "Furniture"://furniture
-                        showNotification("鮮活空間企劃","You are near furniture", R.drawable.toaheftiba);
+                        showNotification("2019 生｜活","You are near furniture", R.drawable.toaheftiba, findMerchandise_furniture.class);
                         break;
                 }
             }
@@ -144,7 +144,7 @@ public class periodicallyUploadService extends Service {
                 switch (minBeacon.getMajor()) {
 
                     case 14346:
-                        myLocation = "Brunch Buffet";
+                        myLocation = "Food Court";
                         break;
                     case 65251:
                         myLocation = "Furniture";
@@ -173,10 +173,14 @@ public class periodicallyUploadService extends Service {
         });
     }
 
-    public void showNotification(String title, String message, int pictureID) {
+    public void showNotification(String title, String message, int pictureID, Class activityClass) {
         Bitmap pic = BitmapFactory.decodeResource(getResources(), pictureID);
         Intent notifyIntent = new Intent(this, MainActivity.class);
-        Intent advertisement = new Intent(this, findMerchandise.class);//改寫成廣告頁面.class即可
+        Intent advertisement = new Intent(this, activityClass);
+            //findMerchandise_furniture.class 因為圖片有版權問題不放資料庫(僅限demo使用)
+            //findMerchandise_grocery.class
+            //findMerchandise_buffet.class
+
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
                 //new Intent[] { notifyIntent }, PendingIntent.FLAG_UPDATE_CURRENT);
